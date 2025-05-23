@@ -1,0 +1,34 @@
+<!-- templates/sRegression/upload.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Archivo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="mb-4">Subir Archivo</h1>
+
+    {% if mensaje %}
+      <div class="alert alert-success">
+        {{ mensaje }}
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.archivo.label_tag }}
+        {{ form.archivo }}
+        {% if form.archivo.errors %}
+          <div class="text-danger">
+            {{ form.archivo.errors }}
+          </div>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary">Subir</button>
+    </form>
+  </div>
+</body>
+</html>

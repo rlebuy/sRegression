@@ -1,0 +1,7 @@
+{% load filename_extras %}
+
+<ul>
+  {% for obj in uploaded_files %}
+    <li>{{ obj.archivo.name|basename }}</li>
+  {% endfor %}
+</ul>

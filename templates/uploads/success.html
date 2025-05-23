@@ -1,0 +1,47 @@
+<!-- templates/sRegression/upload_success.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Éxito!</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="alert alert-success">
+      <h4 class="alert-heading">¡Archivo subido y procesado con éxito!</h4>
+      <p>Tu archivo ha sido procesado y el modelo de regresión ha sido entrenado.</p>
+      <hr>
+      
+      {% if archivos %} {# Opcional: si pasas una lista de archivos subidos #}
+      <h5>Listado de archivos en media (ejemplo):</h5>
+      <ul>
+        {% for item in archivos %}
+          <li>{{ item.nombre }}</li>
+        {% endfor %}
+      </ul>
+      <hr>
+      {% endif %}
+
+      {% if informe_texto %}
+      <div class="mb-4">
+        <h5>Informe del Modelo y Datos (contenido de /media/informe.txt):</h5>
+        <pre style="white-space: pre-wrap; word-wrap: break-word; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: .25rem; max-height: 400px; overflow-y: auto;">{{ informe_texto }}</pre>
+      </div>
+      <hr>
+      {% endif %}
+
+      <div class="mb-4">
+        <h5>Gráfica de Predicción vs Real:</h5>
+        <img src="/media/grafico.png" alt="Gráfico de predicción" class="img-fluid mb-3" style="max-width: 700px;">
+        <h5>Curva de Pérdida:</h5>
+        <img src="/media/resultado.png" alt="Curva de pérdida" class="img-fluid" style="max-width: 700px;">
+      </div>
+      <a href="{% url 'uploads:upload' %}" class="btn btn-secondary">
+        Hacer regresión a otro archivo
+      </a>
+    </div>
+  </div>
+</body>
+</html>

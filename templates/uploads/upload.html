@@ -1,0 +1,51 @@
+<!-- templates/sRegression/upload.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir Archivo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="mb-4">Subir Archivo</h1>
+
+    {% if mensaje %}
+      <div class="alert alert-success">
+        {{ mensaje }}
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.archivo.label_tag }}
+        {{ form.archivo }}
+        {% if form.archivo.errors %}
+          <div class="text-danger">
+            {{ form.archivo.errors }}
+          </div>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary">Subir y Procesar</button>
+    </form>
+    <div id="procesando-msg" class="alert alert-info mt-3" style="display:none;">
+      Procesando, aplicando AI con Tensor Flow...
+    </div>
+    <div id="archivo-msg" class="alert alert-secondary mt-2" style="display:none;">
+      Procesando Archivo: <span id="archivo-nombre"></span>
+    </div>
+  </div>
+  <script>
+    document.querySelector('form').addEventListener('submit', function() {
+      document.getElementById('procesando-msg').style.display = 'block';
+      // Mostrar nombre del archivo
+      var input = document.querySelector('input[type="file"]');
+      if (input.files.length > 0) {
+        document.getElementById('archivo-nombre').textContent = input.files[0].name;
+        document.getElementById('archivo-msg').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

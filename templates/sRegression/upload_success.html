@@ -1,0 +1,28 @@
+<!-- templates/sRegression/upload_success.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Éxito!</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="alert alert-success">
+      <h4 class="alert-heading">¡Archivo subido con éxito!</h4>
+      <p>Tu archivo ha sido guardado correctamente.</p>
+      <hr>
+      <h5>Listado de archivos:</h5>
+      <ul>
+        {% for item in archivos %}
+          <li>{{ item.nombre }}</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'uploads:upload' %}" class="btn btn-secondary">
+        Subir otro archivo
+      </a>
+    </div>
+  </div>
+</body>
+</html>
