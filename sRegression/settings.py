@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j+$fw_p@^k0mxq2h0u6sl@_j_n4s**2cmh!ah(@4$_ioc39)xz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -84,8 +84,8 @@ WSGI_APPLICATION = 'sRegression.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600,
-        ssl_require=True
+        conn_max_age=600
+        # ssl_require=True # Comenta o elimina esta línea para SQLite
     )
 }
 
