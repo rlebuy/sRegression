@@ -10,12 +10,12 @@
 <body class="bg-light">
   <div class="container mt-5">
     <div class="alert alert-success">
-      <h4 class="alert-heading">¡Archivo subido y procesado con éxito!</h4>
-      <p>Tu archivo ha sido procesado y el modelo de regresión ha sido entrenado.</p>
+      <h4 class="alert-heading">¡File updload successfully!</h4>
+      <p>Your file has been processed.</p>
       <hr>
       
-      {% if archivos %} {# Opcional: si pasas una lista de archivos subidos #}
-      <h5>Listado de archivos en media (ejemplo):</h5>
+      {% if archivos %} 
+      <h5>List of files in media (example):</h5>
       <ul>
         {% for item in archivos %}
           <li>{{ item.nombre }}</li>
@@ -39,7 +39,7 @@
         <img src="/media/resultado.png" alt="Curva de pérdida" class="img-fluid" style="max-width: 700px;">
       </div>
       <a href="{% url 'uploads:upload' %}" class="btn btn-secondary">
-        Hacer regresión a otro archivo
+        Regression to another file?
       </a>
     </div>
   </div>

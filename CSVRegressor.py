@@ -97,7 +97,7 @@ class CSVRegressorAuto:
         os.makedirs(output_directory, exist_ok=True) # Asegura que la carpeta 'media' exista
 
         informe_filename = "informe.txt"
-        # Construye la ruta completa al archivo de informe
+        # Construye la ruta completa al file de informe
         informe_path_final = os.path.join(output_directory, informe_filename)
 
         try:
@@ -120,7 +120,7 @@ class CSVRegressorAuto:
                 [f"({coef:.3f} * h{i})" for i, coef in enumerate(coeficientes)]
             ) + f" + ({bias[0]:.3f})"
             
-            # Guardar archivo
+            # Guardar 
             with open(informe_path_final, "w", encoding='utf-8') as f:
                 f.write("🔍 INFORME DE REGRESIÓN CON IA\n")
                 f.write("="*40 + "\n")
