@@ -1,16 +1,16 @@
 <!-- templates/sRegression/upload_success.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>¡Éxito!</title>
+  <title>Success!</title>
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
   <div class="container mt-5">
     <div class="alert alert-success">
-      <h4 class="alert-heading">¡File updload successfully!</h4>
+      <h4 class="alert-heading">File uploaded successfully!</h4>
       <p>Your file has been processed.</p>
       <hr>
       
@@ -18,7 +18,7 @@
       <h5>List of files in media (example):</h5>
       <ul>
         {% for item in archivos %}
-          <li>{{ item.nombre }}</li>
+          <li>{{ item.nombre }}</li> {# Assuming item.nombre is dynamic and might be in any language #}
         {% endfor %}
       </ul>
       <hr>
@@ -26,20 +26,20 @@
 
       {% if informe_texto %}
       <div class="mb-4">
-        <h5>Informe del Modelo y Datos (contenido de /media/informe.txt):</h5>
+        <h5>Model and Data Report (in /media/informe.txt):</h5>
         <pre style="white-space: pre-wrap; word-wrap: break-word; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: .25rem; max-height: 400px; overflow-y: auto;">{{ informe_texto }}</pre>
       </div>
       <hr>
       {% endif %}
 
       <div class="mb-4">
-        <h5>Gráfica de Predicción vs Real:</h5>
-        <img src="/media/grafico.png" alt="Gráfico de predicción" class="img-fluid mb-3" style="max-width: 700px;">
-        <h5>Curva de Pérdida:</h5>
-        <img src="/media/resultado.png" alt="Curva de pérdida" class="img-fluid" style="max-width: 700px;">
+        <h5>Prediction vs Actual Graph:</h5>
+        <img src="/media/grafico.png" alt="Prediction graph" class="img-fluid mb-3" style="max-width: 700px;">
+        <h5>Loss Curve:</h5>
+        <img src="/media/resultado.png" alt="Loss curve" class="img-fluid" style="max-width: 700px;">
       </div>
       <a href="{% url 'uploads:upload' %}" class="btn btn-secondary">
-        Regression to another file?
+        Perform regression to another file ?
       </a>
     </div>
   </div>

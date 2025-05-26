@@ -15,22 +15,33 @@
         {{ mensaje }}
       </div>
     {% endif %}
+    
+    {% if form.archivo.errors %}
+      <div class="alert alert-danger">
+        Please correct the errors below:
+        {{ form.archivo.errors }}
+      </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
       {% csrf_token %}
       <div class="form-group">
         {{ form.archivo.label_tag }}
-        {{ form.archivo }}
-        {% if form.archivo.errors %}
-          <div class="text-danger">
-            {{ form.archivo.errors }}
-          </div>
-        {% endif %}
+        <div class="custom-file">
+          {{ form.archivo }}
+          <label class="custom-file-label" for="{{ form.archivo.id_for_label }}">Choose a CSV File</label>
+        </div>
+        <small id="fileHelp" class="form-text text-muted">Only .csv files are accepted.</small>
       </div>
       <button type="submit" class="btn btn-primary">Upload and Process</button>
     </form>
     <div id="procesando-msg" class="alert alert-info mt-3" style="display:none;">
-      Processing, apliying AI unsing Tensor Flow...
+      Processing, aplying AI unsing Tensor Flow...
     </div>
     <div id="archivo-msg" class="alert alert-secondary mt-2" style="display:none;">
       Processing File: <span id="archivo-nombre"></span>
@@ -40,15 +51,64 @@
     </footer>
   </div>
   <script>
-    document.querySelector('form').addEventListener('submit', function() {
-      document.getElementById('procesando-msg').style.display = 'block';
-      // Mostrar nombre del archivo
-      var input = document.querySelector('input[type="file"]');
-      if (input.files.length > 0) {
-        document.getElementById('archivo-nombre').textContent = input.files[0].name;
-        document.getElementById('archivo-msg').style.display = 'block';
-      }
-    });
+  var fileInput = document.getElementById("{{ form.archivo.id_for_label }}");
+  var uploadForm = document.getElementById("uploadForm");
+  var submitButton = uploadForm.querySelector('button[type="submit"]');
+
+  if (fileInput) {
+      fileInput.addEventListener('change', function(e) {
+          var fileName = "";
+          var isValid = false;
+          if (e.target.files.length > 0) {
+              fileName = e.target.files[0].name;
+              if (fileName.endsWith('.csv')) {
+                  isValid = true;
+              } else {
+                  fileName = "Invalid file type. Please select a .csv file.";
+                  e.target.value = ""; // Limpiar el input si el archivo no es CSV
+              }
+          } else {
+              fileName = "Choose a CSV File";
+              isValid = true; // Permitir que el label se resetee
+          }
+          
+          var label = document.querySelector('label.custom-file-label[for="' + e.target.id + '"]');
+          if (label) {
+              label.textContent = fileName;
+              if (!isValid && e.target.files.length > 0) { // Solo si se intentó seleccionar un archivo inválido
+                label.classList.add('text-danger');
+              } else {
+                label.classList.remove('text-danger');
+              }
+          }
+          // Habilitar/deshabilitar botón de envío basado en la validez del archivo
+          // submitButton.disabled = !isValid && e.target.files.length > 0;
+      });
+  }
+
+  uploadForm.addEventListener('submit', function(event) {
+    if (fileInput.files.length > 0) {
+        var selectedFileName = fileInput.files[0].name;
+        if (!selectedFileName.endsWith('.csv')) {
+            alert("Invalid file type. Only .csv files are accepted.");
+            event.preventDefault(); // Detener el envío del formulario
+            // Resetear el label y el input
+            var label = document.querySelector('label.custom-file-label[for="' + fileInput.id + '"]');
+            if (label) {
+                label.textContent = "Choose a CSV File";
+                label.classList.add('text-danger');
+            }
+            fileInput.value = "";
+            return false;
+        }
+    }
+    // Si pasa la validación o no hay archivo, mostrar mensajes de procesamiento
+    document.getElementById('procesando-msg').style.display = 'block';
+    if (fileInput.files.length > 0) {
+      document.getElementById('archivo-nombre').textContent = fileInput.files[0].name;
+      document.getElementById('archivo-msg').style.display = 'block';
+    }
+  });
   </script>
 </body>
 </html>

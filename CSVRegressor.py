@@ -20,14 +20,14 @@ class CSVRegressorAuto:
         # Filtramos solo columnas numéricas
         numeric_data = data.select_dtypes(include=[np.number])
         if numeric_data.shape[1] < 2:
-            raise ValueError("El CSV debe contener al menos dos columnas numéricas para hacer regresión.")
+            raise ValueError("The CSV must contain at least two numeric columns for regression.")
 
         # Por defecto: última columna numérica como Y, el resto como X
         self.y_column = numeric_data.columns[-1]
         self.x_columns = numeric_data.columns[:-1]
 
-        print(f"Usando '{self.y_column}' como variable objetivo (y)")
-        print(f"Usando {list(self.x_columns)} como variables independientes (X)")
+        print(f"Using '{self.y_column}' as target variable (y)")
+        print(f"Using {list(self.x_columns)} as independent variables (X)")
 
         self.X = numeric_data[self.x_columns].values
         self.y = numeric_data[[self.y_column]].values
@@ -64,11 +64,11 @@ class CSVRegressorAuto:
         y_true_inverse = self.scaler_y.inverse_transform(self.y).flatten()
 
         plt.figure(figsize=(10, 5))
-        plt.plot(y_true_inverse, label="Valor real", color='blue')
-        plt.plot(y_pred_inverse, label="Predicción", color='red')
-        plt.xlabel("Índice de muestra")
+        plt.plot(y_true_inverse, label="Actual Value", color='blue')
+        plt.plot(y_pred_inverse, label="Prediction", color='red')
+        plt.xlabel("Sample Index")
         plt.ylabel(self.y_column)
-        plt.title("Predicción vs Real (Inferida)")
+        plt.title("Prediction vs Actual (Inferred)")
         plt.legend()
         plt.grid(True)
         # Guardar en media/grafico.png
@@ -78,11 +78,11 @@ class CSVRegressorAuto:
 
     def plot_loss(self):
         plt.figure(figsize=(10, 4))
-        plt.plot(self.history.history['loss'], label='Pérdida de entrenamiento')
-        plt.plot(self.history.history['val_loss'], label='Pérdida de validación')
-        plt.title('Curva de pérdida')
-        plt.xlabel('Épocas')
-        plt.ylabel('Pérdida (MSE)')
+        plt.plot(self.history.history['loss'], label='Training Loss')
+        plt.plot(self.history.history['val_loss'], label='Validation Loss')
+        plt.title('Loss Curve')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss (MSE)')
         plt.legend()
         plt.grid(True)
         # Guardar en media/resultado.png
@@ -122,22 +122,22 @@ class CSVRegressorAuto:
             
             # Guardar 
             with open(informe_path_final, "w", encoding='utf-8') as f:
-                f.write("🔍 INFORME DE REGRESIÓN CON IA\n")
+                f.write("🔍 Regression Report with AI\n")
                 f.write("="*40 + "\n")
-                f.write(f"Archivo CSV: {self.csv_path}\n\n")
-                f.write(f"Variable objetivo (Y): {self.y_column}\n")
-                f.write(f"Variables independientes (X): {list(self.x_columns)}\n\n")
-                f.write(f"👉 Ecuación aproximada aprendida (última capa):\n")
+                f.write(f"CSV File: {self.csv_path}\n\n")
+                f.write(f"Target Variable (Y): {self.y_column}\n")
+                f.write(f"Independent Variables (X): {list(self.x_columns)}\n\n")
+                f.write(f"👉 Approximate learned equation (last layer):\n")
                 f.write(eq_str + "\n\n")
-                f.write(f"📊 Métricas en conjunto de prueba:\n")
-                f.write(f" - MSE (Error cuadrático medio): {mse:.4f}\n")
-                f.write(f" - MAE (Error absoluto medio): {mae:.4f}\n")
+                f.write(f"📊 Metrics on test set:\n")
+                f.write(f" - MSE (Mean Squared Error): {mse:.4f}\n")
+                f.write(f" - MAE (Mean Absolute Error): {mae:.4f}\n")
             
-            print(f"✅ Informe guardado en: {os.path.abspath(informe_path_final)}")
+            print(f"✅ Report saved in: {os.path.abspath(informe_path_final)}")
 
         except Exception as e:
-            print(f"❌ Error al generar o guardar el informe: {e}")
-            print(f"   Se intentaba guardar en: {os.path.abspath(informe_path_final)}")
+            print(f"❌ Error generating and saving report: {e}")
+            print(f"   Attempted to save in: {os.path.abspath(informe_path_final)}")
             # Puedes decidir si relanzar la excepción o no, dependiendo de cómo quieras manejar errores.
             # raise e 
         
