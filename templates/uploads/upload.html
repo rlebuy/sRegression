@@ -8,7 +8,7 @@
 </head>
 <body class="bg-light">
   <div class="container mt-5">
-    <h1 class="mb-4">Subir Archivo</h1>
+    <h1 class="mb-4">Small Regression Tool built with Django/Tensor Flow AI</h1>
 
     {% if mensaje %}
       <div class="alert alert-success">
@@ -27,13 +27,13 @@
           </div>
         {% endif %}
       </div>
-      <button type="submit" class="btn btn-primary">Subir y Procesar</button>
+      <button type="submit" class="btn btn-primary">Upload and Process</button>
     </form>
     <div id="procesando-msg" class="alert alert-info mt-3" style="display:none;">
-      Procesando, aplicando AI con Tensor Flow...
+      Processing, apliying AI unsing Tensor Flow...
     </div>
     <div id="archivo-msg" class="alert alert-secondary mt-2" style="display:none;">
-      Procesando Archivo: <span id="archivo-nombre"></span>
+      Processing File: <span id="archivo-nombre"></span>
     </div>
     <footer class="mt-5 text-center text-muted">
       <p>by Rodrigo Lebuy</p>
